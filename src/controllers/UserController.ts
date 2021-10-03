@@ -33,8 +33,7 @@ export default class UserController extends Controller {
   public async getAll(request: Request, response: Response) {
     try {
       const users = await this.userService.getAllUsers();
-      const data = classToPlain(users);
-      return this.ok({ data });
+      return this.ok({ data: users });
     } catch (error) {
       console.log(error);
       return this.serverError(error);
@@ -44,9 +43,9 @@ export default class UserController extends Controller {
   public async getById(request: Request, response: Response) {
     try {
       const { userId } = request.params;
+      console.log(userId);
       const user = await this.userService.getUserById(userId);
-      const data = classToPlain(user);
-      return this.ok({ data });
+      return this.ok({ data: user });
     } catch (error) {
       console.log(error);
       return this.serverError(error);

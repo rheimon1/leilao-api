@@ -1,32 +1,29 @@
-import { getMongoRepository, MongoRepository } from 'typeorm';
-import { Auction } from '../entities/Auction';
-import Service from './Service';
+import { AuctionRepository } from '../repositories/AuctionRepository';
 
-export class AuctionService extends Service<Auction> {
-  private auctionRepository: MongoRepository<Auction>;
+export class AuctionService {
+  private auctionRepository: AuctionRepository;
 
   constructor() {
-    super(Auction);
-    this.auctionRepository = getMongoRepository(Auction);
+    this.auctionRepository = new AuctionRepository();
   }
 
   public async createAuction(data: any) {
-    return this.create(data);
+    return this.auctionRepository.create(data);
   }
 
   public async getAllAuctions() {
-    return this.list();
+    return this.auctionRepository.find();
   }
 
   public async getAuctionById(id: any) {
-    return this.getById(id);
+    return this.auctionRepository.findOne(id);
   }
 
   public async updateAuction(id: any, data: any) {
-    return this.update(id, data);
+    return this.auctionRepository.update(id, data);
   }
 
   public async deleteAuction(id: any) {
-    return this.delete(id);
+    return this.auctionRepository.delete(id);
   }
 }

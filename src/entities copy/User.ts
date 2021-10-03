@@ -1,12 +1,15 @@
 /* eslint-disable import/no-cycle */
+import { Document } from 'mongoose';
 import {
-  IsEmail, IsNotEmpty, IsString, Length,
+  IsEmail, IsNotEmpty, IsOptional, IsString, Length,
 } from 'class-validator';
 import { IsCPF } from 'brazilian-class-validator';
-import { Exclude, Expose } from 'class-transformer';
+import {
+  classToPlain, Exclude, Expose, Transform,
+} from 'class-transformer';
 import { Auction } from './Auction';
 
-export class User {
+export default class User extends Document {
     @Expose()
     @IsString({ message: 'O atributo name deve ser uma string' })
     name: string;
@@ -29,7 +32,23 @@ export class User {
 
     @Expose()
     @IsString({ message: 'O atributo address deve ser uma string' })
-    address: string;
+    address: string
 
-    auctions: Auction[];
+    auctions: Auction[]
+
+  // constructor(
+  //   name: string,
+  //   email: string,
+  //   cpf: string,
+  //   password: string,
+  //   address: string,
+  //   auctions?: Auction[],
+  // ) {
+  //   this.name = name;
+  //   this.email = email;
+  //   this.cpf = cpf;
+  //   this.password = password;
+  //   this.address = address;
+  //   this.auctions = auctions;
+  // }
 }

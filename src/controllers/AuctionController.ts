@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
-import { classToPlain } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 import { Auction } from '../entities/Auction';
 import Controller from './helpers/Controller';
 import { AuctionService } from '../services/AuctionService';
@@ -15,15 +15,16 @@ export default class AuctionController extends Controller {
 
   public async create(request: Request, response: Response) {
     try {
-      const newAuction = new Auction();
-      Object.assign(newAuction, request.body);
+      const newAuction = plainToClass(Auction, request.body);
       const errors = await validate(newAuction, { validationError: { target: false } });
+      console.log(errors);
       if (errors.length > 0) {
         return this.badRequest(errors);
       }
       const auction = await this.auctionService.createAuction(newAuction);
       return this.ok({ data: auction });
     } catch (error) {
+      console.log(error);
       return this.serverError(error);
     }
   }
@@ -31,9 +32,9 @@ export default class AuctionController extends Controller {
   public async getAll(request: Request, response: Response) {
     try {
       const auctions = await this.auctionService.getAllAuctions();
-      const data = classToPlain(auctions);
-      return this.ok({ data });
+      return this.ok({ data: auctions });
     } catch (error) {
+      console.log(error);
       return this.serverError(error);
     }
   }
@@ -42,8 +43,7 @@ export default class AuctionController extends Controller {
     try {
       const { auctionId } = request.params;
       const auction = await this.auctionService.getAuctionById(auctionId);
-      const data = classToPlain(auction);
-      return this.ok({ data });
+      return this.ok({ data: auction });
     } catch (error) {
       return this.serverError(error);
     }

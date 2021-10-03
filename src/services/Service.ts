@@ -9,7 +9,8 @@ export default class Service<T> {
     this.repository = getMongoRepository(entity);
   }
 
-  public async list() {
+  public async list(query?: any) {
+    console.log('wewe', this.repository);
     return this.repository.find();
   }
 
