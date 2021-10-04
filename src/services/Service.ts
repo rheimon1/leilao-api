@@ -10,7 +10,6 @@ export default class Service<T> {
   }
 
   public async list(query?: any) {
-    console.log('wewe', this.repository);
     return this.repository.find();
   }
 

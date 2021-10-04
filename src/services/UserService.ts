@@ -13,7 +13,6 @@ export class UserService {
 
   public async createUser(data: any) {
     const hashedPassword = await this.hasher.hash(data.password);
-    console.log(data);
     const user = await this.userRepository.create({ ...data, password: hashedPassword });
     return user;
   }

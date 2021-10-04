@@ -13,7 +13,6 @@ class UserRepository implements IRepository<Document<User>> {
     return this.userModel.find({ ...query });
   }
   async findOne(id: any): Promise<Document<User, any, any>> {
-    console.log(await this.userModel.findById(id));
     return this.userModel.findOne({ _id: id });
   }
   async create(item: User): Promise<Document<User, any, any>> {

@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 export default async (config: any) => {
   let credentials = '';
 
-  console.log(config);
-
   if (config.auth) {
     credentials = `${config.user}:${config.password}`;
   }
@@ -23,7 +21,6 @@ export default async (config: any) => {
   };
 
   try {
-    console.log(url);
     await mongoose.connect(url, options);
 
     console.log('Connected to database.');

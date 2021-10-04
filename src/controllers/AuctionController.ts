@@ -17,7 +17,6 @@ export default class AuctionController extends Controller {
     try {
       const newAuction = plainToClass(Auction, request.body);
       const errors = await validate(newAuction, { validationError: { target: false } });
-      console.log(errors);
       if (errors.length > 0) {
         return this.badRequest(errors);
       }
